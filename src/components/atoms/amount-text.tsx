@@ -1,26 +1,25 @@
-import { Text, type TextProps } from "react-native";
-import { colors, typography } from "@/lib/theme";
+import { Text, TextProps } from 'react-native';
 
-export function AmountText({
-  value,
-  ...props
-}: TextProps & { value: number }) {
-  const formatted = (value / 100).toFixed(2);
+import { colors, typography } from '@/quarks';
+
+interface AmountTextProps extends TextProps {
+  cents: number;
+  size?: 'normal' | 'large';
+}
+
+export function AmountText({ cents, size = 'normal', style, ...props }: AmountTextProps) {
+  const formatted = `$${(cents / 100).toFixed(2)}`;
   return (
     <Text
       selectable
       style={[
-        {
-          fontVariant: ["tabular-nums"],
-          fontSize: typography.fontSize.lg,
-          fontWeight: typography.fontWeight.semibold,
-          color: colors.text,
-        },
-        props.style,
+        size === 'large' ? typography.amountLarge : typography.amount,
+        { color: colors.text },
+        style,
       ]}
       {...props}
     >
-      ${formatted}
+      {formatted}
     </Text>
   );
 }

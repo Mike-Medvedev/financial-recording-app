@@ -1,38 +1,39 @@
-import { ScrollView } from "react-native";
-import { DayChip } from "@/components/molecules";
-import { getDaysInWeek } from "@/lib/week";
-import { spacing } from "@/lib/theme";
+import { View } from 'react-native';
 
-const DAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+import { DayChip } from '@/components/molecules/day-chip';
+import { getDaysInWeek } from '@/lib/week';
+import { spacing } from '@/quarks';
 
 interface DaySelectorProps {
   weekKey: string;
   selectedDate: string;
-  onSelectDate: (date: string) => void;
+  onSelect: (date: string) => void;
 }
 
 export function DaySelector({
   weekKey,
   selectedDate,
-  onSelectDate,
+  onSelect,
 }: DaySelectorProps) {
   const days = getDaysInWeek(weekKey);
 
   return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{ gap: spacing.sm, marginBottom: spacing.md }}
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        paddingHorizontal: spacing.sm,
+        paddingVertical: spacing.sm,
+      }}
     >
-      {days.map((date, index) => (
+      {days.map((date) => (
         <DayChip
           key={date}
-          label={DAY_LABELS[index]}
           date={date}
           selected={date === selectedDate}
-          onPress={() => onSelectDate(date)}
+          onPress={() => onSelect(date)}
         />
       ))}
-    </ScrollView>
+    </View>
   );
 }

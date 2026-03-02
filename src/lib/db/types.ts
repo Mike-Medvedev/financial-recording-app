@@ -12,6 +12,10 @@ export interface Transaction {
   created_at: string;
 }
 
+export interface TransactionWithCategory extends Transaction {
+  category_name: string;
+}
+
 export interface CategoryTotal {
   category_id: number;
   total: number;

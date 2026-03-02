@@ -41,38 +41,6 @@ This command will move the starter code to the **app-example** directory and cre
 - If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
 - Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
 
-## TestFlight distribution (iOS)
-
-To ship a build to TestFlight so others (e.g. your girlfriend) can install the app on their iPhone:
-
-1. **Install EAS CLI and log in**
-   ```bash
-   npm install -g eas-cli
-   eas login
-   ```
-
-2. **Configure the project** (first time only)
-   ```bash
-   eas build:configure
-   ```
-   Ensure you have an [Apple Developer account](https://developer.apple.com) and that the app exists in [App Store Connect](https://appstoreconnect.apple.com) (create it if needed; the bundle ID must match your `app.json` / Expo config).
-
-3. **Build and submit to TestFlight**
-   ```bash
-   eas build -p ios --profile production --submit
-   ```
-   Or use the shortcut (if configured): `npx testflight`
-
-4. **Optional: skip prompts** by setting env vars:
-   ```bash
-   export EXPO_APPLE_ID=your@email.com
-   export EXPO_APPLE_TEAM_ID=XXXXXXXXXX
-   ```
-
-5. After the build finishes, it will appear in App Store Connect → TestFlight. Add testers (internal or external); they can install the app via the TestFlight app on their iPhone.
-
----
-
 ## Learn more
 
 To learn more about developing your project with Expo, look at the following resources:

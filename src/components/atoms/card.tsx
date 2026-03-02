@@ -1,15 +1,20 @@
-import { View, type ViewProps } from "react-native";
-import { colors, radii, spacing } from "@/lib/theme";
+import { View, ViewProps } from 'react-native';
 
-export function Card({ style, ...props }: ViewProps) {
+import { colors, radius, spacing } from '@/quarks';
+
+interface CardProps extends ViewProps {
+  elevated?: boolean;
+}
+
+export function Card({ style, elevated, ...props }: CardProps) {
   return (
     <View
       style={[
         {
-          backgroundColor: colors.surface,
-          borderRadius: radii.md,
-          padding: spacing.md,
-          borderCurve: "continuous",
+          backgroundColor: elevated ? colors.surfaceElevated : colors.surface,
+          borderRadius: radius.lg,
+          borderCurve: 'continuous',
+          padding: spacing.lg,
         },
         style,
       ]}

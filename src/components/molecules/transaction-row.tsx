@@ -1,37 +1,49 @@
-import { View, Text } from "react-native";
-import { AmountText } from "@/components/atoms";
-import { colors, spacing, typography } from "@/lib/theme";
+import { Pressable, Text, View } from 'react-native';
+
+import { colors, radius, spacing, typography } from '@/quarks';
 
 interface TransactionRowProps {
   categoryName: string;
   amountCents: number;
+  onDelete?: () => void;
 }
 
-export function TransactionRow({ categoryName, amountCents }: TransactionRowProps) {
+export function TransactionRow({
+  categoryName,
+  amountCents,
+  onDelete,
+}: TransactionRowProps) {
+  const formatted = `$${(amountCents / 100).toFixed(2)}`;
   return (
-    <View
+    <Pressable
+      onLongPress={onDelete}
       style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingVertical: spacing.sm,
-        paddingHorizontal: spacing.md,
-        backgroundColor: colors.surfaceElevated,
-        borderRadius: 8,
-        marginBottom: spacing.xs,
-        borderCurve: "continuous",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: spacing.md,
+        paddingHorizontal: spacing.lg,
+        borderRadius: radius.md,
+        borderCurve: 'continuous',
+        backgroundColor: colors.surface,
       }}
     >
-      <Text
+      <View
         style={{
-          fontSize: typography.fontSize.base,
-          fontWeight: typography.fontWeight.medium,
-          color: colors.text,
+          backgroundColor: colors.surfaceElevated,
+          paddingHorizontal: spacing.sm,
+          paddingVertical: spacing.xs,
+          borderRadius: radius.sm,
+          borderCurve: 'continuous',
         }}
       >
-        {categoryName}
+        <Text style={[typography.caption, { color: colors.textSecondary }]}>
+          {categoryName}
+        </Text>
+      </View>
+      <Text selectable style={[typography.amount, { color: colors.text }]}>
+        {formatted}
       </Text>
-      <AmountText value={amountCents} />
-    </View>
+    </Pressable>
   );
 }

@@ -4,62 +4,62 @@
     "atomic-design-fundamentals": {
       "source": "thebushidocollective/han",
       "sourceType": "github",
-      "computedHash": "4a2d3a077911fd8da7ac42c42ff120345e476078ede8f523c9a0a7b4e3eb7cc8"
+      "computedHash": "ae644e79c53f1b450aaf5fd662459da1d66402112230e5b8d4881f8deff981ba"
     },
     "building-native-ui": {
       "source": "expo/skills",
       "sourceType": "github",
-      "computedHash": "342df93f481a0dba919f372d6c7b40d2b4bf5b51dd24363aea2e5d0bae27a6fa"
+      "computedHash": "a0316d2ce842d2dd8067a144e339cf502329dc7701f9f5122268fdb3d4c980f7"
     },
     "expo-api-routes": {
       "source": "expo/skills",
       "sourceType": "github",
-      "computedHash": "015c6b849507fda73fcc32d2448f033aaaaa21f5229085342b8421727a90cafb"
+      "computedHash": "267bd3bfa27718103a74458df1e875ff6f6db31cba2ebe1d8a527cf25da39761"
     },
     "expo-cicd-workflows": {
       "source": "expo/skills",
       "sourceType": "github",
-      "computedHash": "700b20b575fcbe75ad238b41a0bd57938abe495e62dc53e05400712ab01ee7c0"
+      "computedHash": "6cd9fa605a8144d424daa02489633fa0b0fcb15d74e29d0d23e6d6d894fc51df"
     },
     "expo-deployment": {
       "source": "expo/skills",
       "sourceType": "github",
-      "computedHash": "9ea9f16374765c1b16764a51bd43a64098921b33f48e94d9c5c1cce24b335c10"
+      "computedHash": "2a26de7ec3faaf19333ec5660152e5e711ef000a29d75324dff51967bc382755"
     },
     "expo-dev-client": {
       "source": "expo/skills",
       "sourceType": "github",
-      "computedHash": "234e2633b7fbcef2d479f8fe8ab20d53d08ed3e4beec7c965da4aff5b43affe7"
+      "computedHash": "ea568acdc9036b82b969159757456e9a4cdfae7f645ac2fad5fdf0f734f53568"
     },
     "expo-tailwind-setup": {
       "source": "expo/skills",
       "sourceType": "github",
-      "computedHash": "d39e806942fe880347f161056729b588a3cb0f1796270eebf52633fe11cfdce1"
+      "computedHash": "16c53e80cacd65369acfd8a4f5cf06a60083cc6d980127b4b2e384b81ce0e547"
     },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",
-      "computedHash": "6412eb4eb3b91595ebab937f0c69501240e7ba761b3d82510b5cf506ec5c7adc"
+      "computedHash": "25872a21881a950edc3db1f3329664d60405d539660ce05b3265db2de06a7dfd"
     },
     "native-data-fetching": {
       "source": "expo/skills",
       "sourceType": "github",
-      "computedHash": "6c14e4efb34a9c4759e8b959f82dec328f87dd89a022957c6737086984b9b106"
+      "computedHash": "523901a0f2dfddc91f6c3b09320e240abfe7c81b6f7277e14774ec39ac0c544b"
     },
     "tanstack-query-best-practices": {
       "source": "deckardger/tanstack-agent-skills",
       "sourceType": "github",
-      "computedHash": "21d2e8b7468a81d772b6527ad8ca178cc2f3f08af777bb9061333013ee88a0c9"
+      "computedHash": "addf4358803d7746f7fe0475a3370d835775217e00dd5fc7bbd8a7d6c53d81e5"
     },
     "upgrading-expo": {
       "source": "expo/skills",
       "sourceType": "github",
-      "computedHash": "b10c092308d8d7401e2fc75fd773a79762ba4dad4ec1c7f5f5551efb0ba2cfdc"
+      "computedHash": "7d1b7787b515b4fd6f089311e084b946f9c0a5fa70d24cf35c1fb82403e3afb8"
     },
     "vercel-react-native-skills": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",
-      "computedHash": "2e9088a7333666d8c2833b8ff58bd51b955501c42b4c7244f72b4cbf22dafcc4"
+      "computedHash": "a804b4e848059822638c390359976f7021380bcefb1469d473aa4e9202c15ecb"
     }
   }
 }

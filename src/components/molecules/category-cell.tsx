@@ -1,41 +1,56 @@
-import { Pressable, Text, View } from "react-native";
-import { AmountText } from "@/components/atoms";
-import { colors, radii, spacing, typography } from "@/lib/theme";
+import { Pressable, Text, View } from 'react-native';
+
+import { colors, radius, spacing, typography } from '@/quarks';
 
 interface CategoryCellProps {
-  label: string;
+  name: string;
   totalCents: number;
   onPress: () => void;
 }
 
-export function CategoryCell({ label, totalCents, onPress }: CategoryCellProps) {
+export function CategoryCell({ name, totalCents, onPress }: CategoryCellProps) {
+  const formatted = `$${(totalCents / 100).toFixed(2)}`;
   return (
     <Pressable
       onPress={onPress}
-      style={({ pressed }) => [
-        {
-          backgroundColor: colors.surfaceElevated,
-          borderRadius: radii.md,
-          padding: spacing.md,
-          minWidth: 100,
-          borderCurve: "continuous",
-          opacity: pressed ? 0.8 : 1,
-        },
-      ]}
+      style={({ pressed }) => ({
+        backgroundColor: pressed ? colors.surfaceSelected : colors.surface,
+        borderRadius: radius.md,
+        borderCurve: 'continuous',
+        padding: spacing.md,
+        alignItems: 'center',
+        gap: spacing.xs,
+        minWidth: 80,
+      })}
     >
-      <Text
-        style={{
-          fontSize: typography.fontSize.xs,
-          fontWeight: typography.fontWeight.medium,
-          color: colors.textSecondary,
-          textTransform: "uppercase",
-          letterSpacing: 0.5,
-          marginBottom: spacing.xs,
-        }}
-      >
-        {label}
+      <Text style={[typography.label, { color: colors.textSecondary }]}>
+        {name}
       </Text>
-      <AmountText value={totalCents} />
+      <Text selectable style={[typography.amount, { color: colors.text }]}>
+        {formatted}
+      </Text>
+    </Pressable>
+  );
+}
+
+export function AddCategoryCell({ onPress }: { onPress: () => void }) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => ({
+        backgroundColor: pressed ? colors.surfaceSelected : colors.surface,
+        borderRadius: radius.md,
+        borderCurve: 'continuous',
+        padding: spacing.md,
+        alignItems: 'center',
+        justifyContent: 'center',
+        minWidth: 56,
+        borderWidth: 1,
+        borderColor: colors.border,
+        borderStyle: 'dashed',
+      })}
+    >
+      <Text style={{ color: colors.textSecondary, fontSize: 24 }}>+</Text>
     </Pressable>
   );
 }

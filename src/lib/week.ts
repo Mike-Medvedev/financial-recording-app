@@ -1,55 +1,76 @@
-/**
- * Week helpers: weeks are Monday–Sunday.
- * Week key = ISO date string of the Monday (e.g. "2026-03-02").
- */
-
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
-
-export function getWeekKey(date: Date): string {
-  const d = new Date(date.getTime());
-  const day = d.getUTCDay();
-  const diff = day === 0 ? 6 : day - 1;
-  const mondayMs = d.getTime() - diff * MS_PER_DAY;
-  return formatDateKey(mondayMs);
+function toISODate(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 
-export function getWeekKeyFromString(dateStr: string): string {
-  return getWeekKey(new Date(dateStr + "Z"));
+function parseDate(iso: string): Date {
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Date(y, m - 1, d);
 }
 
-/** Parse YYYY-MM-DD as noon UTC to avoid timezone/DST issues. */
-function parseDateKey(key: string): number {
-  return new Date(key + "T12:00:00.000Z").getTime();
+export function getWeekKey(date: Date = new Date()): string {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = day === 0 ? -6 : 1 - day;
+  d.setDate(d.getDate() + diff);
+  return toISODate(d);
 }
 
-/** Format timestamp to YYYY-MM-DD (UTC). */
-function formatDateKey(ms: number): string {
-  return new Date(ms).toISOString().slice(0, 10);
+export function getWeekRange(weekKey: string): { start: string; end: string } {
+  const monday = parseDate(weekKey);
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  return { start: toISODate(monday), end: toISODate(sunday) };
 }
 
-/** Returns [mondayDate, sundayDate] as ISO date strings. */
-export function getWeekRange(weekKey: string): [string, string] {
-  const mondayMs = parseDateKey(weekKey);
-  const sundayMs = mondayMs + 6 * MS_PER_DAY;
-  return [weekKey, formatDateKey(sundayMs)];
-}
-
-/** Returns the 7 dates (Mon–Sun) as ISO date strings for the given week. */
 export function getDaysInWeek(weekKey: string): string[] {
-  const mondayMs = parseDateKey(weekKey);
-  const dates: string[] = [];
+  const monday = parseDate(weekKey);
+  const days: string[] = [];
   for (let i = 0; i < 7; i++) {
-    dates.push(formatDateKey(mondayMs + i * MS_PER_DAY));
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    days.push(toISODate(d));
   }
-  return dates;
+  return days;
 }
 
-/** Format week key for display e.g. "Mar 2 – Mar 8, 2026". */
+export function shiftWeek(weekKey: string, offset: number): string {
+  const d = parseDate(weekKey);
+  d.setDate(d.getDate() + offset * 7);
+  return toISODate(d);
+}
+
 export function formatWeekLabel(weekKey: string): string {
-  const [mon, sun] = getWeekRange(weekKey);
-  const m = new Date(parseDateKey(mon));
-  const s = new Date(parseDateKey(sun));
-  const monStr = m.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  const sunStr = s.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-  return `${monStr} – ${sunStr}`;
+  const { start, end } = getWeekRange(weekKey);
+  const s = parseDate(start);
+  const e = parseDate(end);
+
+  const months = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+  ];
+
+  const sameMonth = s.getMonth() === e.getMonth();
+  const startStr = `${months[s.getMonth()]} ${s.getDate()}`;
+  const endStr = sameMonth
+    ? `${e.getDate()}`
+    : `${months[e.getMonth()]} ${e.getDate()}`;
+
+  return `${startStr} – ${endStr}, ${s.getFullYear()}`;
+}
+
+export function formatDayShort(iso: string): string {
+  const d = parseDate(iso);
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  return days[d.getDay()];
+}
+
+export function formatDayNumber(iso: string): string {
+  return String(parseDate(iso).getDate());
+}
+
+export function isToday(iso: string): boolean {
+  return iso === toISODate(new Date());
 }

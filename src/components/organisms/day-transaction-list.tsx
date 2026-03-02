@@ -1,60 +1,42 @@
-import { View, Text, ActivityIndicator } from "react-native";
-import { TransactionRow } from "@/components/molecules";
-import { colors, spacing, typography } from "@/lib/theme";
+import { Text, View } from 'react-native';
 
-interface TransactionItem {
-  id: number;
-  category_name: string;
-  amount: number;
-}
+import { TransactionRow } from '@/components/molecules/transaction-row';
+import { useDayTransactions } from '@/hooks/use-day-transactions';
+import { useDeleteTransaction } from '@/hooks/use-delete-transaction';
+import type { TransactionWithCategory } from '@/lib/db';
+import { colors, spacing, typography } from '@/quarks';
 
 interface DayTransactionListProps {
-  transactions: TransactionItem[];
-  isLoading?: boolean;
+  date: string;
 }
 
-export function DayTransactionList({
-  transactions,
-  isLoading,
-}: DayTransactionListProps) {
-  if (isLoading) {
-    return (
-      <View style={{ padding: spacing.xl, alignItems: "center" }}>
-        <ActivityIndicator color={colors.accent} />
-      </View>
-    );
-  }
+export function DayTransactionList({ date }: DayTransactionListProps) {
+  const { data: transactions = [] } = useDayTransactions(date);
+  const deleteMutation = useDeleteTransaction();
 
   if (transactions.length === 0) {
     return (
       <View
         style={{
-          padding: spacing.lg,
-          backgroundColor: colors.surfaceElevated,
-          borderRadius: 12,
-          borderCurve: "continuous",
+          paddingVertical: spacing.xxl,
+          alignItems: 'center',
         }}
       >
-        <Text
-          style={{
-            fontSize: typography.fontSize.base,
-            color: colors.textSecondary,
-            textAlign: "center",
-          }}
-        >
-          No transactions this day
+        <Text style={[typography.body, { color: colors.textTertiary }]}>
+          No transactions
         </Text>
       </View>
     );
   }
 
   return (
-    <View>
-      {transactions.map((tx) => (
+    <View style={{ gap: spacing.sm, paddingHorizontal: spacing.lg }}>
+      {transactions.map((tx: TransactionWithCategory) => (
         <TransactionRow
           key={tx.id}
           categoryName={tx.category_name}
           amountCents={tx.amount}
+          onDelete={() => deleteMutation.mutate({ id: tx.id, date: tx.date })}
         />
       ))}
     </View>
