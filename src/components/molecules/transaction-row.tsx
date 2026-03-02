@@ -15,35 +15,69 @@ export function TransactionRow({
 }: TransactionRowProps) {
   const formatted = `$${(amountCents / 100).toFixed(2)}`;
   return (
-    <Pressable
-      onLongPress={onDelete}
+    <View
       style={{
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: spacing.md,
-        paddingHorizontal: spacing.lg,
         borderRadius: radius.md,
         borderCurve: 'continuous',
         backgroundColor: colors.surface,
+        overflow: 'hidden',
       }}
     >
       <View
         style={{
-          backgroundColor: colors.surfaceElevated,
-          paddingHorizontal: spacing.sm,
-          paddingVertical: spacing.xs,
-          borderRadius: radius.sm,
-          borderCurve: 'continuous',
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingVertical: spacing.md,
+          paddingHorizontal: spacing.lg,
         }}
       >
-        <Text style={[typography.caption, { color: colors.textSecondary }]}>
-          {categoryName}
+        <View
+          style={{
+            backgroundColor: colors.surfaceElevated,
+            paddingHorizontal: spacing.sm,
+            paddingVertical: spacing.xs,
+            borderRadius: radius.sm,
+            borderCurve: 'continuous',
+          }}
+        >
+          <Text style={[typography.caption, { color: colors.textSecondary }]}>
+            {categoryName}
+          </Text>
+        </View>
+        <Text selectable style={[typography.amount, { color: colors.text }]}>
+          {formatted}
         </Text>
       </View>
-      <Text selectable style={[typography.amount, { color: colors.text }]}>
-        {formatted}
-      </Text>
-    </Pressable>
+
+      {onDelete && (
+        <Pressable
+          onPress={onDelete}
+          hitSlop={4}
+          style={({ pressed }) => ({
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingHorizontal: spacing.md,
+            alignSelf: 'stretch',
+            backgroundColor: pressed
+              ? colors.destructive
+              : 'rgba(255, 69, 58, 0.15)',
+          })}
+        >
+          <Text
+            style={{
+              fontSize: 13,
+              fontWeight: '600',
+              color: colors.destructive,
+            }}
+          >
+            ✕
+          </Text>
+        </Pressable>
+      )}
+    </View>
   );
 }

@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import React, { useCallback, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { DaySelector } from '@/components/organisms/day-selector';
 import { DayTransactionList } from '@/components/organisms/day-transaction-list';
@@ -21,6 +22,7 @@ function todayISO(): string {
 export default function HomeScreen() {
   const router = useRouter();
   const today = todayISO();
+  const insets = useSafeAreaInsets();
   const [weekKey, setWeekKey] = useState(() => getWeekKey());
   const [selectedDate, setSelectedDate] = useState(today);
 
@@ -54,12 +56,14 @@ export default function HomeScreen() {
   );
 
   return (
-    <ScrollView
-      contentInsetAdjustmentBehavior="automatic"
-      style={{ flex: 1, backgroundColor: colors.background }}
-      contentContainerStyle={{ paddingBottom: spacing.xxl }}
-    >
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <WeekPicker weekKey={weekKey} onWeekChange={handleWeekChange} />
+
+      <DaySelector
+        weekKey={weekKey}
+        selectedDate={selectedDate}
+        onSelect={setSelectedDate}
+      />
 
       <View style={{ paddingVertical: spacing.md }}>
         <ExpenseTable
@@ -69,13 +73,7 @@ export default function HomeScreen() {
         />
       </View>
 
-      <DaySelector
-        weekKey={weekKey}
-        selectedDate={selectedDate}
-        onSelect={setSelectedDate}
-      />
-
-      <View style={{ paddingTop: spacing.md }}>
+      <View style={{ flex: 1, paddingTop: spacing.md }}>
         <Text
           style={[
             typography.label,
@@ -88,8 +86,8 @@ export default function HomeScreen() {
         >
           Transactions
         </Text>
-        <DayTransactionList date={selectedDate} />
+        <DayTransactionList date={selectedDate} bottomInset={insets.bottom} />
       </View>
-    </ScrollView>
+    </View>
   );
 }
