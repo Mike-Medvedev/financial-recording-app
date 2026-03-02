@@ -65,7 +65,19 @@ export default function HomeScreen() {
         onSelect={setSelectedDate}
       />
 
-      <View style={{ paddingVertical: spacing.md }}>
+      <View style={{ paddingTop: spacing.md, paddingBottom: spacing.md }}>
+        <Text
+          style={[
+            typography.label,
+            {
+              color: colors.textSecondary,
+              paddingHorizontal: spacing.lg,
+              paddingBottom: spacing.sm,
+            },
+          ]}
+        >
+          Weekly Running Total
+        </Text>
         <ExpenseTable
           weekKey={weekKey}
           onCellPress={handleCellPress}
