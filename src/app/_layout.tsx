@@ -45,6 +45,16 @@ export default function RootLayout() {
               contentStyle: { backgroundColor: '#1a1a1a' },
             }}
           />
+          <Stack.Screen
+            name="calendar"
+            options={{
+              presentation: 'formSheet',
+              sheetGrabberVisible: true,
+              sheetAllowedDetents: [0.6, 0.85],
+              headerShown: false,
+              contentStyle: { backgroundColor: '#1a1a1a' },
+            }}
+          />
         </Stack>
       </DatabaseProvider>
     </QueryClientProvider>

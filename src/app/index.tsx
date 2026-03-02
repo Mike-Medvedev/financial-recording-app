@@ -1,5 +1,5 @@
-import { useRouter } from 'expo-router';
-import React, { useCallback, useState } from 'react';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -23,8 +23,19 @@ export default function HomeScreen() {
   const router = useRouter();
   const today = todayISO();
   const insets = useSafeAreaInsets();
+  const { pickedDate, pickedWeekKey } = useLocalSearchParams<{
+    pickedDate?: string;
+    pickedWeekKey?: string;
+  }>();
   const [weekKey, setWeekKey] = useState(() => getWeekKey());
   const [selectedDate, setSelectedDate] = useState(today);
+
+  useEffect(() => {
+    if (pickedDate && pickedWeekKey) {
+      setWeekKey(pickedWeekKey);
+      setSelectedDate(pickedDate);
+    }
+  }, [pickedDate, pickedWeekKey]);
 
   const handleCellPress = useCallback(
     (category: Category) => {
@@ -44,6 +55,13 @@ export default function HomeScreen() {
     router.push('/add-category');
   }, [router]);
 
+  const handleCalendarPress = useCallback(() => {
+    router.push({
+      pathname: '/calendar',
+      params: { selectedDate },
+    });
+  }, [router, selectedDate]);
+
   const handleWeekChange = useCallback(
     (newWeekKey: string) => {
       setWeekKey(newWeekKey);
@@ -57,7 +75,11 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
-      <WeekPicker weekKey={weekKey} onWeekChange={handleWeekChange} />
+      <WeekPicker
+        weekKey={weekKey}
+        onWeekChange={handleWeekChange}
+        onCalendarPress={handleCalendarPress}
+      />
 
       <DaySelector
         weekKey={weekKey}

@@ -6,9 +6,14 @@ import { formatWeekLabel, shiftWeek } from '@/lib/week';
 interface WeekPickerProps {
   weekKey: string;
   onWeekChange: (weekKey: string) => void;
+  onCalendarPress?: () => void;
 }
 
-export function WeekPicker({ weekKey, onWeekChange }: WeekPickerProps) {
+export function WeekPicker({
+  weekKey,
+  onWeekChange,
+  onCalendarPress,
+}: WeekPickerProps) {
   return (
     <View
       style={{
@@ -33,9 +38,20 @@ export function WeekPicker({ weekKey, onWeekChange }: WeekPickerProps) {
         <Text style={{ color: colors.text, fontSize: 18 }}>‹</Text>
       </Pressable>
 
-      <Text selectable style={[typography.heading, { color: colors.text }]}>
-        {formatWeekLabel(weekKey)}
-      </Text>
+      <Pressable
+        onPress={onCalendarPress}
+        style={({ pressed }) => ({
+          paddingHorizontal: spacing.md,
+          paddingVertical: spacing.xs,
+          borderRadius: radius.md,
+          borderCurve: 'continuous',
+          backgroundColor: pressed ? colors.surfaceSelected : 'transparent',
+        })}
+      >
+        <Text style={[typography.heading, { color: colors.text }]}>
+          {formatWeekLabel(weekKey)}
+        </Text>
+      </Pressable>
 
       <Pressable
         onPress={() => onWeekChange(shiftWeek(weekKey, 1))}
